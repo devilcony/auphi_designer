@@ -1,0 +1,5 @@
+<attributes>  
+
+  <attribute id="lookupfield"> <xmlcode>lookupfield</xmlcode> <repcode/> <description>FuzzyMatchDialog.wlLookupField.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/> </attribute>
+  <attribute id="mainstreamfield"> <xmlcode>mainstreamfield</xmlcode> <repcode/> <description>FuzzyMatchDialog.wlMainStreamField.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/> </attribute>
+</attributes>

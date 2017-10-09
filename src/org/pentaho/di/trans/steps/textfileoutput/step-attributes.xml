@@ -1,0 +1,8 @@
+<attributes>  
+
+  <!-- Top level attributes -->
+  <attribute id="name"> <xmlcode>name</xmlcode> <repcode/> <description>TextFileOutputDialog.Filename.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/> </attribute>
+  <attribute id="separator"> <xmlcode>separator</xmlcode> <repcode/> <description>TextFileOutputDialog.Separator.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/></attribute>
+  <attribute id="header"> <xmlcode>header</xmlcode>  <repcode/> <description>TextFileOutputDialog.Header.Label</description> <tooltip/> <valuetype>Integer</valuetype> <parentid/></attribute>
+  
+</attributes>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<people>
+		<person id="001" sex="F">
+			Cici Reids
+			<jobRef>3</jobRef>
+		</person>
+		<person id="002" sex="F">
+			Juliet Cumberland
+			<jobRef>1</jobRef>
+		</person>
+		<person id="003" sex="M">
+			Khan McLaren
+			<jobRef>2</jobRef>
+		</person>
+	</people>
+	<positions>
+		<job id="1">Instructor</job>
+		<job id="2">Associate Professor</job>
+		<job id="3">Chair Professor</job>
+	</positions>
+</root>

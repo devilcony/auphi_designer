@@ -1,0 +1,3 @@
+﻿北京傲飞商智软件有限公司版权所有，保留所有权利. (C) 2012 - %1$tY.
+公司网址： http://www.doetl.com
+Pentaho 中文社区： http://www.pentahochina.com

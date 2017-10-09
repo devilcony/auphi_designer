@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+  <!--  ###############################################################################   -->
+  <!--     REPOSITORY LOGIN DIALOG: Dialog to login to the repository                     -->
+  <!--  ###############################################################################   -->    
+    <dialog id="repository-login-dialog" buttonlabelaccept="${Dialog.Ok}" buttonlabelcancel="${Dialog.Cancel}"
+		ondialogaccept="repositoryLoginController.showRepository()"
+		ondialogcancel="repositoryLoginController.closeRepositoryLoginDialog()" 
+		buttons="accept, cancel" buttonalign="right" title="${RepositoryLoginDialog.Title}" 
+		height="475" width="400"
+		resizable="true"
+		appicon="ui/images/spoon.ico"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		xmlns:pen="http://www.pentaho.org/2008/xul" 
+		onload="repositoryLoginController.init()" padding="10" spacing="3">
+    <label id="connect-tip" value="${RepositoryLoginDialog.Connect.Tip}" />
+    <listbox id="available-repository-list" pen:binding="description" disabled="false" flex="1" command="repositoryLoginController.login()"/>
+		<label id="repository-url-lab" value="${RepositoryLoginDialog.RepositoryUrl}" />
+		<textbox id="repository-url" multiline="false" command="repositoryLoginController.showRepository()" />
+		<label id="user-name-lab" value="${RepositoryLoginDialog.UserName}" />
+		<textbox id="user-name" multiline="false" command="repositoryLoginController.showRepository()"/>
+		<label id="user-password-lab" value="${RepositoryLoginDialog.Password}" />
+		<textbox id="user-password" type="password" multiline="false" command="repositoryLoginController.showRepository()"/>    
+		<label id="spacer-label"/>
+  </dialog>

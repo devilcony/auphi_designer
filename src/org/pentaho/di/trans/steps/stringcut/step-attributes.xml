@@ -1,0 +1,14 @@
+<attributes>  
+
+  <!-- The fields grid defining all CSV Input fields -->
+  <attribute id="FIELDS"> <xmlcode>fields</xmlcode>  <repcode/> <description>StringCutDialog.Fields.Label</description> <tooltip/> ValueMetaInterface.TYPE_NONE <parentid/> </attribute>
+
+  <!-- The definition of a single CSV input field -->
+  <attribute id="FIELD"> <xmlcode>field</xmlcode>  <repcode/> <description>StringCutDialog.Fields.Label</description> <tooltip/> ValueMetaInterface.TYPE_NONE <parentid>FIELDS</parentid> </attribute>
+
+  <attribute id="in_stream_name"> <xmlcode>in_stream_name</xmlcode>  <repcode>in_stream_name</repcode> <description>StringCutDialog.ColumnInfo.InStreamField</description> <tooltip/> <valuetype>String</valuetype> <parentid>FIELD</parentid> </attribute>
+  <attribute id="out_stream_name"> <xmlcode>out_stream_name</xmlcode>  <repcode>out_stream_name</repcode> <description>StringCutDialog.ColumnInfo.OutStreamField</description> <tooltip/> <valuetype>String</valuetype> <parentid>FIELD</parentid> </attribute>
+  <attribute id="cut_from"> <xmlcode>cut_from</xmlcode>  <repcode>cut_from</repcode> <description>StringCutDialog.ColumnInfo.CutFrom</description> <tooltip/> <valuetype>String</valuetype> <parentid>FIELD</parentid> </attribute>
+  <attribute id="cut_to"> <xmlcode>cut_to</xmlcode>  <repcode>cut_to</repcode> <description>StringCutDialog.ColumnInfo.CutTo</description> <tooltip/> <valuetype>String</valuetype> <parentid>FIELD</parentid> </attribute>
+ 
+</attributes>

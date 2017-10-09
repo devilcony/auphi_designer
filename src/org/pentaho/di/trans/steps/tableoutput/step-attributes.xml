@@ -1,0 +1,8 @@
+<attributes>  
+
+  <!-- Top level attributes -->
+  <attribute id="table"> <xmlcode>table</xmlcode> <repcode/> <description>TableOutputDialog.TargetTable.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/> </attribute>
+  <attribute id="schema"> <xmlcode>schema</xmlcode> <repcode/> <description>TableOutputDialog.TargetSchema.Label</description> <tooltip/> <valuetype>String</valuetype> <parentid/></attribute>
+  <attribute id="connection"> <xmlcode>connection</xmlcode>  <repcode/> <description>BaseStepDialog.Connection.Label</description> <tooltip/> <valuetype>Integer</valuetype> <parentid/></attribute>
+  <attribute id="truncate"> <xmlcode>truncate</xmlcode>  <repcode/> <description>TableOutputDialog.TruncateTable.Label</description> <tooltip/> <valuetype>Integer</valuetype> <parentid/></attribute>
+</attributes>

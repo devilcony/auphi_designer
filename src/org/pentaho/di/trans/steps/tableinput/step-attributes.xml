@@ -1,0 +1,8 @@
+<attributes>  
+
+  <!-- Top level attributes -->
+  <attribute id="sql"> <xmlcode>sql</xmlcode> <repcode/> <description>TableInputDialog.SQL</description> <tooltip/> <valuetype>String</valuetype> <parentid/> </attribute>
+  <attribute id="variableReplacementActive"> <xmlcode>variables_active</xmlcode> <repcode/> <description>TableInputDialog.ReplaceVariables</description> <tooltip/> <valuetype>String</valuetype> <parentid/></attribute>
+  <attribute id="connection"> <xmlcode>connection</xmlcode>  <repcode/> <description>TableInputDialog.DatabaseSource</description> <tooltip/> <valuetype>Integer</valuetype> <parentid/></attribute>
+  
+</attributes>

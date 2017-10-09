@@ -1,0 +1,62 @@
+This Change Data Extractor plugin can extract change data from a database table by use of row level trigger.
+
+
+PDI version
+-----------
+- 4.x
+
+Install
+--------
+- create a new directory under plugins/steps, unzip plugin_cde.zip to the fold.
+
+
+Contact
+--------
+- support@pentahochina.com
+
+Website
+- http://www.pentahochina.com
+
+version history
+
+- version: 1.0.8
+- date: 07/07/2015
+- change list: 
+   1. adaptation to auphi-designer2.0(kettle 4.x)
+
+- version: 1.0.7
+- date: 07/02/2012
+- change list: 
+   1. in oracle delete trigger change changge ":new" to ":old"
+
+- version: 1.0.6
+- date: 11/01/2010
+- change list: 
+   1. retry-times for different sync is calculated separately  (max 10 sync from 0 to 9,  retry-time for each sync is 5)
+
+- version: 1.0.4
+- date: 06/02/2010
+- change list: 
+   1. bug fix when using user defined SQL in the SQL tab.
+
+- version: 1.0.3
+- date: 04/25/2010
+- change list: 
+   1. when database type is MySQL, add "TYPE=innodb " in the create shadow table statement to support transaction. 
+   2. add a retry mode:  when a record in shadow table reachs to the max retry time, extract it in a slower frequency.
+
+
+- version: 1.0.2
+- date: 04/14/2010
+- change list: 
+   1. support unique connection and transaction.
+
+
+- version: 1.0
+- date: 03/21/2010
+- change list:
+
+
+
+TODO:
+remove OPERATEID field from CDE output stream.
