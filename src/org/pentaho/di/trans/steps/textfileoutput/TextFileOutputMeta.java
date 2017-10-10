@@ -169,6 +169,9 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
     private boolean specifyingFormat;
     
     private String dateTimeFormat;
+    
+    /** Jason KDI */
+    private  boolean writeSeparatorAfterLastColumn;
 
 	public TextFileOutputMeta()
     {
@@ -687,7 +690,7 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
 			if (enclosure==null) enclosure="";
 
             enclosureForced = "Y".equalsIgnoreCase(XMLHandler.getTagValue(stepnode, "enclosure_forced"));
-            
+            writeSeparatorAfterLastColumn = "Y".equalsIgnoreCase(XMLHandler.getTagValue(stepnode, "separator_last_column"));
             String sDisableEnclosureFix = XMLHandler.getTagValue(stepnode, "enclosure_fix_disabled");
             // Default this value to true for backwards compatibility
             if(sDisableEnclosureFix == null) {
@@ -794,6 +797,7 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
 	{
 		createparentfolder=false;
 		separator  = ";";
+		writeSeparatorAfterLastColumn=true;//jason 2016
 		enclosure  = "\"";
 		specifyingFormat=false;
 		dateTimeFormat=null;
@@ -986,7 +990,9 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
                 v.setGroupingSymbol(field.getGroupingSymbol());
                 v.setCurrencySymbol(field.getCurrencySymbol());
                 v.setOutputPaddingEnabled( isPadded() );
-                v.setTrimType(field.getTrimType());
+                //Jason 201611 zhongpin
+                v.setTrimType(ValueMetaInterface.TRIM_TYPE_BOTH);
+                //v.setTrimType(field.getTrimType());
                 if ( ! Const.isEmpty(getEncoding()) )
                 {
             		v.setStringEncoding(getEncoding());
@@ -1004,6 +1010,7 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
 		StringBuffer retval=new StringBuffer(800);
 		
 		retval.append("    ").append(XMLHandler.addTagValue("separator", separator));
+		retval.append("    ").append(XMLHandler.addTagValue("separator_last_column", writeSeparatorAfterLastColumn));
 		retval.append("    ").append(XMLHandler.addTagValue("enclosure", enclosure));
         retval.append("    ").append(XMLHandler.addTagValue("enclosure_forced", enclosureForced));
         retval.append("    ").append(XMLHandler.addTagValue("enclosure_fix_disabled", disableEnclosureFix));
@@ -1069,6 +1076,7 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
 		try
 		{
 			separator           =  rep.getStepAttributeString (id_step, "separator");
+			writeSeparatorAfterLastColumn    =  rep.getStepAttributeBoolean(id_step, "separator_last_column");
 			enclosure           =  rep.getStepAttributeString (id_step, "enclosure");
             enclosureForced     =  rep.getStepAttributeBoolean(id_step, "enclosure_forced");
             disableEnclosureFix =  rep.getStepAttributeBoolean(id_step, 0, "enclosure_fix_disabled", true);
@@ -1153,6 +1161,7 @@ public class TextFileOutputMeta extends BaseStepMeta  implements StepMetaInterfa
 		try
 		{
 			rep.saveStepAttribute(id_transformation, id_step, "separator",        separator);
+			rep.saveStepAttribute(id_transformation, id_step, "separator_last_column", writeSeparatorAfterLastColumn);
 			rep.saveStepAttribute(id_transformation, id_step, "enclosure",        enclosure);
             rep.saveStepAttribute(id_transformation, id_step, "enclosure_forced", enclosureForced);
             rep.saveStepAttribute(id_transformation, id_step, 0, "enclosure_fix_disabled", disableEnclosureFix);
@@ -1328,4 +1337,14 @@ public void injectStepMetadataEntries(List<StepInjectionMetaEntry> metadata)  th
   public List<StepInjectionMetaEntry> getStepInjectionMetadataEntries() throws KettleException {
     return getStepInjectionMetadataEntries(PKG);
   }
+//JASON KDI
+public boolean isWriteSepatatorAfterLashColumn() {
+	// TODO Auto-generated method stub
+	return writeSeparatorAfterLastColumn;
+}
+public void setWriteSepatatorAfterLashColumn(boolean s) {
+	// TODO Auto-generated method stub
+	writeSeparatorAfterLastColumn = s;
+}
+//JASON KDI
 }

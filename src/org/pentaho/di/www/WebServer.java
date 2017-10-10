@@ -318,6 +318,7 @@ public class WebServer
         SocketConnector connector = new SocketConnector();
         connector.setPort(port);
         connector.setHost(hostname);
+        connector.setSoLingerTime(1000);
         connector.setName(BaseMessages.getString(PKG, "WebServer.Log.KettleHTTPListener",hostname));
         log.logBasic(BaseMessages.getString(PKG, "WebServer.Log.CreateListener",hostname,""+port));
 

@@ -262,7 +262,8 @@ public class TableOutput extends BaseStep implements StepInterface
         }
         
     	//Create Table Add By JYHE START
-        if(data.tablesqlfirst&&meta.createTable())
+//      if(data.tablesqlfirst&&meta.createTable())
+        if(data.tablesqlfirst) // for both create table and alter table. so don't check whether table is exist.
         {
         	data.tablesqlfirst=false;
         	if(!data.db.checkTableExists(tableName))
@@ -272,8 +273,15 @@ public class TableOutput extends BaseStep implements StepInterface
         			sqlScript = data.db.getDDL(tableName,rowMeta,null, false, null, true).replace(";", "")+"DEFAULT CHARSET=utf8;";  
         		else
         			sqlScript = data.db.getDDL(tableName,rowMeta,null, false, null, true);  
-        		System.out.println("=============create table sqlScript="+sqlScript);
-        		execsqlscript(sqlScript);
+        		
+        		if(sqlScript!=null && sqlScript.length()>0)
+    			try{
+    				if(log.isBasic()) logBasic("create table sqlScript= "+sqlScript); 
+    				execsqlscript(sqlScript);
+    			}catch (Exception ex)
+    			{
+    				ex.printStackTrace();
+    			}
         	}
         }else
         {
@@ -647,8 +655,13 @@ public class TableOutput extends BaseStep implements StepInterface
           if (!meta.isPartitioningEnabled() && !meta.isTableNameInField()) {
             data.tableName = environmentSubstitute(meta.getTablename());
   
+            String tableName;
+            if(meta.getSchemaName()==null || meta.getSchemaName().length()==0)
+            	tableName= meta.getTablename();
+            else
+            	tableName= meta.getSchemaName()+"."+meta.getTablename();
             
-            if(data.db.checkTableExists(environmentSubstitute(meta.getTablename())))//jason 2014
+            if(data.db.checkTableExists(environmentSubstitute(tableName)))//jason 2014
             {
             	// Only the first one truncates in a non-partitioned step copy
                 //

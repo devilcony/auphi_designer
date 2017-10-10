@@ -99,7 +99,7 @@ public class JsonInput extends BaseStep implements StepInterface
 				throw new KettleException(BaseMessages.getString(PKG, "JsonInput.Log.RequiredNotAccessibleFilesMissing",message));
 		}
 	}
-   private boolean ReadNextString()
+   private boolean ReadNextString() throws KettleException
    {
 	   
 	   try {
@@ -173,11 +173,12 @@ public class JsonInput extends BaseStep implements StepInterface
 		   
 		   readFileOrString();
 	   } catch(Exception e) {
-			logError(BaseMessages.getString(PKG, "JsonInput.Log.UnexpectedError", e.toString()));
-			stopAll();
-			logError(Const.getStackTracker(e));
-			setErrors(1);
-			return false;
+//			logError(BaseMessages.getString(PKG, "JsonInput.Log.UnexpectedError", e.toString()));
+//			stopAll();
+//			logError(Const.getStackTracker(e));
+//			setErrors(1);
+//			return false;
+		    throw new KettleException(e);
 		}
 		return true;
 	   

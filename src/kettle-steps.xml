@@ -68,6 +68,21 @@
 		Database join
     <iconfile>ui/images/CLC.png</iconfile>
   </step>
+  
+  <step id="FIFOCalculator">
+    <description>i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.FIFOCaculator</description>
+    <classname>org.pentaho.di.trans.steps.fifocalculator.FIFOCalculatorMeta</classname>
+    <category>i18n:org.pentaho.di.trans.step:BaseStep.Category.Transform</category>
+    <tooltip>i18n:org.pentaho.di.trans.step:BaseStep.TypeTooltipDesc.FIFOCalculator</tooltip>
+    <iconfile>ui/images/FFC.png</iconfile>
+  </step>
+  <step id="FieldsChangeAccumulator">
+    <description>i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.FieldsChangeAccumulator</description>
+    <classname>org.pentaho.di.trans.steps.fieldschangeaccumulator.FieldsChangeAccumulatorMeta</classname>
+    <category>i18n:org.pentaho.di.trans.step:BaseStep.Category.Statistics</category>
+    <tooltip>i18n:org.pentaho.di.trans.step:BaseStep.TypeTooltipDesc.FieldsChangeAccumulator</tooltip>
+    <iconfile>ui/images/FCA.png</iconfile>
+  </step>
 
   <step id="Constant">
     <description>i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.AddConstants</description>

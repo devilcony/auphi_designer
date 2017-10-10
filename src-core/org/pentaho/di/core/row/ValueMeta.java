@@ -182,7 +182,50 @@ public class ValueMeta implements ValueMetaInterface
 		switch(type)
 		{
 		case TYPE_INTEGER: setConversionMask("#;-#"); break;
-		case TYPE_NUMBER: setConversionMask("#.#;-#.#"); break;
+		case TYPE_NUMBER: setConversionMask("#.##;-#.##"); break;
+		case TYPE_BIGNUMBER: 
+			setConversionMask("#.###############################################;-#.###############################################");
+			setGroupingSymbol(null);
+			setDecimalSymbol(".");  // For backward compatibility reasons!
+			break;
+		default: break;
+		}
+    }
+    
+    /**
+     * added by jason, set conversion by length and precision
+     * @param length
+     * @param precision
+     */
+    public void setConversionMask(int length, int precision)
+    {
+        // Set some sensible default mask on the numbers
+        //
+		switch(type)
+		{
+		case TYPE_INTEGER: setConversionMask("#;-#"); break;
+		case TYPE_NUMBER: 
+			{
+				if(length>0 && precision>0 && length>precision)
+				{
+					String precisionString="";
+					String lengthString="";
+					for(int i=0;i<precision;i++)
+					{
+						precisionString+="#";
+					}
+					for(int i=0;i<length-precision;i++)
+					{
+						lengthString+="#";
+					}
+					String conversionStr = lengthString+"."+precisionString+";"+ "-" +lengthString+ "."+precisionString;
+					setConversionMask(conversionStr);
+				}else
+				{
+					setConversionMask("#.##;-#.##");
+				}
+				break;
+			}
 		case TYPE_BIGNUMBER: 
 			setConversionMask("#.###############################################;-#.###############################################");
 			setGroupingSymbol(null);

@@ -29,6 +29,7 @@ public class SAPLibraryTester {
 	private static final String JCO_IMPL_EXISTENCE_TEST_CLASS = "com.sap.conn.rfc.driver.CpicDriver";
 
 	public static boolean isJCoLibAvailable() {
+		System.out.println("test isJCoLibAvailable");
 		try {
 			Object c = Class.forName(JCO_LIB_EXISTENCE_TEST_CLASS);
 			if (c == null)

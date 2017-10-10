@@ -147,6 +147,10 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
 	private TextVar         wSeparator;
 	private FormData     fdlSeparator, fdbSeparator, fdSeparator;
 
+	private Label        wlSeparatorAfterLastColumn;
+    private Button       wSeparatorAfterLastColumn;
+    private FormData     fdlSeparatorAfterLastColumn, fdSeparatorAfterLastColumn;
+    
 	private Label        wlEnclosure;
 	private TextVar      wEnclosure;
 	private FormData     fdlEnclosure, fdEnclosure;
@@ -822,13 +826,39 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
 		fdSeparator.right= new FormAttachment(wbSeparator, -margin);
 		wSeparator.setLayoutData(fdSeparator);
 
+		//sepatator after last column line... jason 2016
+		wlSeparatorAfterLastColumn=new Label(wContentComp, SWT.RIGHT);
+		wlSeparatorAfterLastColumn.setText(BaseMessages.getString(PKG, "TextFileOutputDialog.SepatatorLastColumn.Label"));
+        props.setLook(wlSeparatorAfterLastColumn);
+        fdlSeparatorAfterLastColumn=new FormData();
+        fdlSeparatorAfterLastColumn.left = new FormAttachment(0, 0);
+        fdlSeparatorAfterLastColumn.top  = new FormAttachment(wSeparator, margin);
+        fdlSeparatorAfterLastColumn.right= new FormAttachment(middle, -margin);
+        wlSeparatorAfterLastColumn.setLayoutData(fdlSeparatorAfterLastColumn);
+        wSeparatorAfterLastColumn=new Button(wContentComp, SWT.CHECK );
+        props.setLook(wSeparatorAfterLastColumn);
+        fdSeparatorAfterLastColumn=new FormData();
+        fdSeparatorAfterLastColumn.left = new FormAttachment(middle, 0);
+        fdSeparatorAfterLastColumn.top  = new FormAttachment(wSeparator, margin);
+        fdSeparatorAfterLastColumn.right= new FormAttachment(100, 0);
+        wSeparatorAfterLastColumn.setLayoutData(fdSeparatorAfterLastColumn);
+        wSeparatorAfterLastColumn.addSelectionListener(new SelectionAdapter() 
+            {
+                public void widgetSelected(SelectionEvent e) 
+                {
+                    input.setChanged();
+                }
+            }
+        );
+        
+		
 		// Enclosure line...
 		wlEnclosure=new Label(wContentComp, SWT.RIGHT);
 		wlEnclosure.setText(BaseMessages.getString(PKG, "TextFileOutputDialog.Enclosure.Label"));
  		props.setLook(wlEnclosure);
 		fdlEnclosure=new FormData();
 		fdlEnclosure.left = new FormAttachment(0, 0);
-		fdlEnclosure.top  = new FormAttachment(wSeparator, margin);
+		fdlEnclosure.top  = new FormAttachment(wSeparatorAfterLastColumn, margin);
 		fdlEnclosure.right= new FormAttachment(middle, -margin);
 		wlEnclosure.setLayoutData(fdlEnclosure);
 		wEnclosure=new TextVar(transMeta, wContentComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
@@ -836,7 +866,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
 		wEnclosure.addModifyListener(lsMod);
 		fdEnclosure=new FormData();
 		fdEnclosure.left = new FormAttachment(middle, 0);
-		fdEnclosure.top  = new FormAttachment(wSeparator, margin);
+		fdEnclosure.top  = new FormAttachment(wSeparatorAfterLastColumn, margin);
 		fdEnclosure.right= new FormAttachment(100, 0);
 		wEnclosure.setLayoutData(fdEnclosure);
 
@@ -1480,6 +1510,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
 		wCreateParentFolder.setSelection(input.isCreateParentFolder());
 		wExtension.setText(Const.NVL(input.getExtension(), ""));
 		wSeparator.setText(Const.NVL(input.getSeparator(), ""));
+		wSeparatorAfterLastColumn.setSelection(input.isWriteSepatatorAfterLashColumn());//jason 2016	
 		wEnclosure.setText(Const.NVL(input.getEnclosure(), ""));
 		
 		if (input.getFileFormat()!=null) {
@@ -1561,7 +1592,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
 		tfoi.setExtension(  wExtension.getText() );
 		tfoi.setSplitEvery( Const.toInt(wSplitEvery.getText(), 0) );
 		tfoi.setEndedLine( wEndedLine.getText() );
-		
+		tfoi.setWriteSepatatorAfterLashColumn(wSeparatorAfterLastColumn.getSelection());//jason 2016
 		tfoi.setFileNameField(   wFileNameField.getText() );
 		tfoi.setFileNameInField( wFileNameInField.getSelection() );
 

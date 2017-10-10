@@ -458,7 +458,10 @@ public class SapInputDialog extends BaseStepDialog implements StepDialogInterfac
 			TableItem item = wInput.table.getItem(i);
 			int colnr=1;
 			item.setText(colnr++, Const.NVL(parameter.getFieldName(), ""));
-			item.setText(colnr++, parameter.getSapType().getDescription());
+			if(parameter.getSapType()==null)
+				item.setText(colnr++, "");
+			else
+				item.setText(colnr++, Const.NVL(parameter.getSapType().getDescription(), "")); 
 			item.setText(colnr++, Const.NVL(parameter.getTableName(), ""));
 			item.setText(colnr++, Const.NVL(parameter.getParameterName(), ""));
 			item.setText(colnr++, ValueMeta.getTypeDesc(parameter.getTargetType()));

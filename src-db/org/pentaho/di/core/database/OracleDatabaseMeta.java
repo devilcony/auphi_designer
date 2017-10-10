@@ -314,7 +314,7 @@ public class OracleDatabaseMeta extends BaseDatabaseMeta implements DatabaseInte
 		String fieldname = v.getName();
 		int    length    = v.getLength();
 		int    precision = v.getPrecision();
-		
+		String comments = v.getComments();//jason 20161116
 		if (add_fieldname) retval.append(fieldname).append(' ');
 		
 		int type         = v.getType();

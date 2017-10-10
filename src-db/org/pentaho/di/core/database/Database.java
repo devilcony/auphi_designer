@@ -2966,6 +2966,7 @@ public class Database implements VariableSpace, LoggingObjectInterface
         v.setOriginalColumnTypeName(originalColumnTypeName);
         v.setOriginalPrecision(originalPrecision);
         v.setOriginalScale(originalScale);
+        v.setConversionMask(length,precision); //2017 jason
         // v.setOriginalAutoIncrement(originalAutoIncrement);  DISABLED FOR PERFORMANCE REASONS : PDI-1788
         // v.setOriginalNullable(originalNullable);            DISABLED FOR PERFORMANCE REASONS : PDI-1788
         v.setOriginalSigned(originalSigned);

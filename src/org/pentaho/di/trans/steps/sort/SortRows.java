@@ -81,7 +81,8 @@ public class SortRows extends BaseStep implements StepInterface {
       for (int i = 0; i < data.fieldnrs.length; i++) {
         if (data.convertKeysToNative[i]) {
           int index = data.fieldnrs[i];
-          r[index] = rowMeta.getValueMeta(index).convertBinaryStringToNativeType((byte[]) r[index]);
+          if(r[index] instanceof byte[]) //jason 2017
+        	  r[index] = rowMeta.getValueMeta(index).convertBinaryStringToNativeType((byte[]) r[index]);
         }
       }
 

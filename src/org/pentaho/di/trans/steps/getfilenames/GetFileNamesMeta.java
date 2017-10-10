@@ -428,76 +428,78 @@ public class GetFileNamesMeta extends BaseStepMeta implements StepMetaInterface
 	{
         
 		// the filename
-		ValueMetaInterface filename = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.filename"),ValueMeta.TYPE_STRING);
+		//ValueMetaInterface filename = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.filename"),ValueMeta.TYPE_STRING);
+		ValueMetaInterface filename = new ValueMeta("filename",ValueMeta.TYPE_STRING);
 		filename.setLength(500);
 		filename.setPrecision(-1);
 		filename.setOrigin(name);
 		row.addValueMeta(filename);
 
 		// the short filename
-		ValueMetaInterface short_filename = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.short_filename"),ValueMeta.TYPE_STRING);
+		//ValueMetaInterface short_filename = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.short_filename"),ValueMeta.TYPE_STRING);
+		ValueMetaInterface short_filename = new ValueMeta("short_filename",ValueMeta.TYPE_STRING);
 		short_filename.setLength(500);
 		short_filename.setPrecision(-1);
 		short_filename.setOrigin(name);
 		row.addValueMeta(short_filename);
 
 		// the path
-		ValueMetaInterface path = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.path"),ValueMeta.TYPE_STRING);
+		ValueMetaInterface path = new ValueMeta("path",ValueMeta.TYPE_STRING);
 		path.setLength(500);
 		path.setPrecision(-1);
 		path.setOrigin(name);
 		row.addValueMeta(path);
-        
+		
 		// the type     
-		ValueMetaInterface type = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.type"),ValueMeta.TYPE_STRING);
+		ValueMetaInterface type = new ValueMeta("type",ValueMeta.TYPE_STRING);
 		type.setLength(500);
 		type.setPrecision(-1);
 		type.setOrigin(name);
 		row.addValueMeta(type);
-        
+		
 		// the exists     
-		ValueMetaInterface exists = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.exists"),ValueMeta.TYPE_BOOLEAN);
+		ValueMetaInterface exists = new ValueMeta("exists",ValueMeta.TYPE_BOOLEAN);
 		exists.setOrigin(name);
 		row.addValueMeta(exists);
-        
+		
 		// the ishidden     
-		ValueMetaInterface ishidden = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.ishidden"),ValueMeta.TYPE_BOOLEAN);
+		ValueMetaInterface ishidden = new ValueMeta("ishidden",ValueMeta.TYPE_BOOLEAN);
 		ishidden.setOrigin(name);
 		row.addValueMeta(ishidden);
-              
+		      
 		// the isreadable     
-		ValueMetaInterface isreadable = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.isreadable"),ValueMeta.TYPE_BOOLEAN);
+		ValueMetaInterface isreadable = new ValueMeta("isreadable",ValueMeta.TYPE_BOOLEAN);
 		isreadable.setOrigin(name);
 		row.addValueMeta(isreadable);
-        
+		
 		// the iswriteable     
-		ValueMetaInterface iswriteable = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.iswriteable"),ValueMeta.TYPE_BOOLEAN);
+		ValueMetaInterface iswriteable = new ValueMeta("iswriteable",ValueMeta.TYPE_BOOLEAN);
 		iswriteable.setOrigin(name);
 		row.addValueMeta(iswriteable);  
-                
+		        
 		// the lastmodifiedtime     
-		ValueMetaInterface lastmodifiedtime = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.lastmodifiedtime"),ValueMeta.TYPE_DATE);
+		ValueMetaInterface lastmodifiedtime = new ValueMeta("lastmodifiedtime",ValueMeta.TYPE_DATE);
 		lastmodifiedtime.setOrigin(name);
 		row.addValueMeta(lastmodifiedtime);  
-        
+		
 		// the size     
-		ValueMetaInterface size = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.size"), ValueMeta.TYPE_INTEGER);
+		ValueMetaInterface size = new ValueMeta("size", ValueMeta.TYPE_INTEGER);
 		size.setOrigin(name);
 		row.addValueMeta(size);
-        
+		
 		// the extension     
-		ValueMetaInterface extension = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.extension"), ValueMeta.TYPE_STRING);
+		ValueMetaInterface extension = new ValueMeta("extension", ValueMeta.TYPE_STRING);
 		extension.setOrigin(name);
 		row.addValueMeta(extension); 
-               
+		       
 		// the uri     
-		ValueMetaInterface uri = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.uri"), ValueMeta.TYPE_STRING);
+		ValueMetaInterface uri = new ValueMeta("uri", ValueMeta.TYPE_STRING);
 		uri.setOrigin(name);
 		row.addValueMeta(uri); 
-        
-        
+		
+		
 		// the rooturi     
-		ValueMetaInterface rooturi = new ValueMeta(BaseMessages.getString(PKG,"GetFileNames.rooturi"), ValueMeta.TYPE_STRING);
+		ValueMetaInterface rooturi = new ValueMeta("rooturi", ValueMeta.TYPE_STRING);
 		rooturi.setOrigin(name);
 		row.addValueMeta(rooturi); 
 		

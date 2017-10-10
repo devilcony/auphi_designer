@@ -237,6 +237,11 @@ public class TextFileOutput extends BaseStep implements StepInterface
                     //
 					writeField(v, valueData, null); 
 				}
+				//KDI Jason 2016
+				if(meta.isWriteSepatatorAfterLashColumn())
+					data.writer.write(data.binarySeparator);
+				//KDI END
+				
                 data.writer.write(data.binaryNewline);
 			}
 			else
@@ -253,6 +258,10 @@ public class TextFileOutput extends BaseStep implements StepInterface
 					Object valueData = r[data.fieldnrs[i]];
 					writeField(v, valueData, data.binaryNullValue[i]);
 				}
+				//KDI Jason 2016
+				if(meta.isWriteSepatatorAfterLashColumn())
+					data.writer.write(data.binarySeparator);
+				//KDI END
                 data.writer.write(data.binaryNewline);
 			}
 
@@ -334,7 +343,9 @@ public class TextFileOutput extends BaseStep implements StepInterface
                     throw new KettleValueException("Unable to convert String to Binary with specified string encoding ["+v.getStringEncoding()+"]", e);
                 }
             }
-        	if( length > string.length() ) 
+          //jason zhongpin 201611  
+            if( false)
+          //if( length > string.length())
         	{
         		// we need to pad this
         		

@@ -782,6 +782,293 @@ public class CsvInput extends BaseStep implements StepInterface
 
 	}
 
+	
+	
+//	 /**
+//	   * Read a single row of data from the file...
+//	   *
+//	   * @param skipRow          if row should be skipped: header row or part of row in case of parallel read
+//	   * @param ignoreEnclosures if enclosures should be ignored, i.e. in case of we need to skip part of the row during
+//	   *                         parallel read
+//	   * @return a row of data...
+//	   * @throws KettleException
+//	   */
+//	  private Object[] readOneRow( boolean skipRow, boolean ignoreEnclosures ) throws KettleException {
+//
+//	    try {
+//
+//	      Object[] outputRowData = RowDataUtil.allocateRowData( data.outputRowMeta.size() );
+//	      int outputIndex = 0;
+//	      boolean newLineFound = false;
+//	      boolean endOfBuffer = false;
+//	      List<Exception> conversionExceptions = null;
+//	      List<ValueMetaInterface> exceptionFields = null;
+//
+//	      // The strategy is as follows...
+//	      // We read a block of byte[] from the file.
+//	      // We scan for the separators in the file (NOT for line feeds etc)
+//	      // Then we scan that block of data.
+//	      // We keep a byte[] that we extend if needed..
+//	      // At the end of the block we read another, etc.
+//	      //
+//	      // Let's start by looking where we left off reading.
+//	      //
+//	      while ( !newLineFound && outputIndex < meta.getInputFields().length ) {
+//
+//	        if ( data.resizeBufferIfNeeded() ) {
+//	          // Last row was being discarded if the last item is null and
+//	          // there is no end of line delimiter
+//	          if ( outputRowData != null ) {
+//	            // Make certain that at least one record exists before
+//	            // filling the rest of them with null
+//	            if ( outputIndex > 0 ) {
+//	              // Optionally add the current filename to the mix as well...
+//	              //
+//	              if ( meta.isIncludingFilename() && !Const.isEmpty( meta.getFilenameField() ) ) {
+//	                if ( meta.isLazyConversionActive() ) {
+//	                  outputRowData[ data.filenameFieldIndex ] = data.binaryFilename;
+//	                } else {
+//	                  outputRowData[ data.filenameFieldIndex ] = data.filenames[ data.filenr - 1 ];
+//	                }
+//	              }
+//
+//	              if ( data.isAddingRowNumber ) {
+//	                outputRowData[data.rownumFieldIndex] = data.rowNumber++;
+//	              }
+//
+//	              incrementLinesInput();
+//	              return outputRowData;
+//	            }
+//	          }
+//
+//	          return null; // nothing more to read, call it a day.
+//	        }
+//
+//	        // OK, at this point we should have data in the byteBuffer and we should be able to scan for the next
+//	        // delimiter (;)
+//	        // So let's look for a delimiter.
+//	        // Also skip over the enclosures ("), it is NOT taking into account escaped enclosures.
+//	        // Later we can add an option for having escaped or double enclosures in the file. <sigh>
+//	        //
+//	        boolean delimiterFound = false;
+//	        boolean enclosureFound = false;
+//	        boolean doubleLineEnd = false;
+//	        int escapedEnclosureFound = 0;
+//	        boolean ignoreEnclosuresInField = ignoreEnclosures;
+//	        while ( !delimiterFound && !newLineFound && !endOfBuffer ) {
+//	          // If we find the first char, we might find others as well ;-)
+//	          // Single byte delimiters only for now.
+//	          //
+//	          if ( data.delimiterFound() ) {
+//	            delimiterFound = true;
+//	          } else if ( ( !meta.isNewlinePossibleInFields() || outputIndex == meta.getInputFields().length - 1 )
+//	            && data.newLineFound() ) {
+//	            // Perhaps we found a (pre-mature) new line?
+//	            //
+//	            // In case we are not using an enclosure and in case fields contain new lines
+//	            // we need to make sure that we check the newlines possible flag.
+//	            // If the flag is enable we skip newline checking except for the last field in the row.
+//	            // In that one we can't support newlines without enclosure (handled below).
+//	            //
+//	            newLineFound = true;
+//
+//	            // Skip new line character
+//	            for ( int i = 0; i < data.encodingType.getLength(); i++ ) {
+//	              data.moveEndBufferPointer();
+//	            }
+//	            // Re-check for double new line (\r\n)...
+//	            if ( data.newLineFound() ) {
+//	              // Found another one, need to skip it later
+//	              doubleLineEnd = true;
+//	            }
+//	          } else if ( data.enclosureFound() && !ignoreEnclosuresInField ) {
+//	            int enclosurePosition = data.getEndBuffer();
+//	            int fieldFirstBytePosition = data.getStartBuffer();
+//	            if ( fieldFirstBytePosition == enclosurePosition ) {
+//	              // Perhaps we need to skip over an enclosed part?
+//	              // We always expect exactly one enclosure character
+//	              // If we find the enclosure doubled, we consider it escaped.
+//	              // --> "" is converted to " later on.
+//	              //
+//	              enclosureFound = true;
+//	              boolean keepGoing;
+//	              do {
+//	                if ( data.moveEndBufferPointer() ) {
+//	                  enclosureFound = false;
+//	                  break;
+//	                }
+//	                keepGoing = !data.enclosureFound();
+//	                if ( !keepGoing ) {
+//	                  // We found an enclosure character.
+//	                  // Read another byte...
+//	                  if ( !data.endOfBuffer() && data.moveEndBufferPointer() ) {
+//	                    break;
+//	                  }
+//	                  if ( data.enclosure.length > 1 ) {
+//	                    data.moveEndBufferPointer();
+//	                  }
+//	                  // If this character is also an enclosure, we can consider the enclosure "escaped".
+//	                  // As such, if this is an enclosure, we keep going...
+//	                  //
+//	                  keepGoing = data.enclosureFound();
+//	                  if ( keepGoing ) {
+//	                    escapedEnclosureFound++;
+//	                  }
+//	                }
+//	              } while ( keepGoing );
+//
+//	              // Did we reach the end of the buffer?
+//	              //
+//	              if ( data.endOfBuffer() ) {
+//	                endOfBuffer = true;
+//	                break;
+//	              }
+//	            } else {
+//	              // Ignoring enclosure if it's not at the field start
+//	              ignoreEnclosuresInField = true;
+//	            }
+//	          } else {
+//	            if ( data.moveEndBufferPointer() ) {
+//	              endOfBuffer = true;
+//	              break;
+//	            }
+//	          }
+//	        }
+//
+//	        // If we're still here, we found a delimiter...
+//	        // Since the starting point never changed really, we just can grab range:
+//	        //
+//	        // [startBuffer-endBuffer[
+//	        //
+//	        // This is the part we want.
+//	        // data.byteBuffer[data.startBuffer]
+//	        //
+//
+//	        byte[] field = data.getField( delimiterFound, enclosureFound, newLineFound, endOfBuffer );
+//
+//	        // Did we have any escaped characters in there?
+//	        //
+//	        if ( escapedEnclosureFound > 0 ) {
+//	          if ( log.isRowLevel() ) {
+//	            logRowlevel( "Escaped enclosures found in " + new String( field ) );
+//	          }
+//	          field = data.removeEscapedEnclosures( field, escapedEnclosureFound );
+//	        }
+//
+//	        if ( !skipRow ) {
+//	          if ( meta.isLazyConversionActive() ) {
+//	            outputRowData[ outputIndex++ ] = field;
+//	          } else {
+//	            // We're not lazy so we convert the data right here and now.
+//	            // The convert object uses binary storage as such we just have to ask the native type from it.
+//	            // That will do the actual conversion.
+//	            //
+//	            ValueMetaInterface sourceValueMeta = data.convertRowMeta.getValueMeta( outputIndex );
+//	            try {
+//	              outputRowData[ outputIndex++ ] = sourceValueMeta.convertBinaryStringToNativeType( field );
+//	            } catch ( KettleValueException e ) {
+//	              // There was a conversion error,
+//	              //
+//	              outputRowData[ outputIndex++ ] = null;
+//
+//	              if ( conversionExceptions == null ) {
+//	                conversionExceptions = new ArrayList<Exception>();
+//	                exceptionFields = new ArrayList<ValueMetaInterface>();
+//	              }
+//
+//	              conversionExceptions.add( e );
+//	              exceptionFields.add( sourceValueMeta );
+//	            }
+//	          }
+//	        } else {
+//	          outputRowData[ outputIndex++ ] = null; // nothing for the header, no conversions here.
+//	        }
+//
+//	        // OK, move on to the next field...
+//	        // PDI-8187: Before we increment, we should check to see if the while condition is about to fail.
+//	        // this will prevent the endBuffer from being incremented twice (once by this block and once in the
+//	        // do-while loop below) and possibly skipping a newline character. This can occur if there is an
+//	        // empty column at the end of the row (see the Jira case for details)
+//	        if ( ( !newLineFound && outputIndex < meta.getInputFields().length ) || ( newLineFound && doubleLineEnd ) ) {
+//	          int i = 0;
+//	          while ( ( !data.newLineFound() && ( i < data.delimiter.length ) ) ) {
+//	            data.moveEndBufferPointer();
+//	            i++;
+//	          }
+//	          if ( data.newLineFound() && outputIndex >= meta.getInputFields().length ) {
+//	            data.moveEndBufferPointer();
+//	          }
+//	          if ( doubleLineEnd && data.encodingType.getLength() > 1 ) {
+//	            data.moveEndBufferPointer();
+//	          }
+//	        }
+//
+//	        data.setStartBuffer( data.getEndBuffer() );
+//	      }
+//
+//	      // See if we reached the end of the line.
+//	      // If not, we need to skip the remaining items on the line until the next newline...
+//	      //
+//	      if ( !newLineFound && !data.resizeBufferIfNeeded() ) {
+//	        do {
+//	          data.moveEndBufferPointer();
+//	          if ( data.resizeBufferIfNeeded() ) {
+//	            break; // nothing more to read.
+//	          }
+//
+//	          // TODO: if we're using quoting we might be dealing with a very dirty file with quoted newlines in trailing
+//	          // fields. (imagine that)
+//	          // In that particular case we want to use the same logic we use above (refactored a bit) to skip these fields.
+//
+//	        } while ( !data.newLineFound() );
+//
+//	        if ( !data.resizeBufferIfNeeded() ) {
+//	          while ( data.newLineFound() ) {
+//	            data.moveEndBufferPointer();
+//	            if ( data.resizeBufferIfNeeded() ) {
+//	              break; // nothing more to read.
+//	            }
+//	          }
+//	        }
+//
+//	        // Make sure we start at the right position the next time around.
+//	        data.setStartBuffer( data.getEndBuffer() );
+//	      }
+//
+//	      // Optionally add the current filename to the mix as well...
+//	      //
+//	      if ( meta.isIncludingFilename() && !Utils.isEmpty( meta.getFilenameField() ) ) {
+//	        if ( meta.isLazyConversionActive() ) {
+//	          outputRowData[ data.filenameFieldIndex ] = data.binaryFilename;
+//	        } else {
+//	          outputRowData[ data.filenameFieldIndex ] = data.filenames[ data.filenr - 1 ];
+//	        }
+//	      }
+//
+//	      if ( data.isAddingRowNumber ) {
+//	        outputRowData[ data.rownumFieldIndex ] = data.rowNumber++;
+//	      }
+//
+//	      if ( !ignoreEnclosures ) {
+//	        incrementLinesInput();
+//	      }
+//
+//	      if ( conversionExceptions != null && conversionExceptions.size() > 0 ) {
+//	        // Forward the first exception
+//	        //
+//	        throw new KettleConversionException(
+//	          "There were " + conversionExceptions.size() + " conversion errors on line " + getLinesInput(),
+//	          conversionExceptions, exceptionFields, outputRowData );
+//	      }
+//
+//	      return outputRowData;
+//	    } catch ( KettleConversionException e ) {
+//	      throw e;
+//	    } catch ( IOException e ) {
+//	      throw new KettleFileException( "Exception reading line using NIO", e );
+//	    }
+//	  }
+//	  
 	private int calculateFieldLength(boolean newLineFound, int newLines, boolean enclosureFound, boolean endOfBuffer) {
 	  
 	  int length = data.endBuffer-data.startBuffer;

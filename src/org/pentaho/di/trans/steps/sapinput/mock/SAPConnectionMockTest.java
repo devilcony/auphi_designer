@@ -46,15 +46,16 @@ public class SAPConnectionMockTest {
 
 		// how to obtain a connection
 		SAPConnection sc = SAPConnectionFactoryMock.create();
-
+		System.out.println("args[0]=ip ,args[1]=user, args[2]=pass, args[3]=system_number,args[4]=SAP_CLIENT,args[5]=SAP_LANGUAGE");
 		// how to open a connection
 		// @Matt:
 		// please show us how to retrieve the connection params from the
 		// pentaho environment
-		DatabaseMeta cp = new DatabaseMeta("SAP", "SAPR3", "Plugin", "192.168.9.50", null, null, "USER", "PASSWORT");
-		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_SYSTEM_NUMBER, "00");
-		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_CLIENT, "100");
-		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_LANGUAGE, "DE");
+		DatabaseMeta cp = new DatabaseMeta("SAP", "SAPR3", "Plugin",  args[0], null, null, args[1], args[2]);//
+		
+		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_SYSTEM_NUMBER, args[3]);
+		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_CLIENT, args[4]);
+		cp.getAttributes().setProperty(SAPR3DatabaseMeta.ATTRIBUTE_SAP_LANGUAGE, args[5]);
 		sc.open(cp);
 
 		// how to query all functions

@@ -388,6 +388,7 @@ public class PluginRegistry {
       } catch (ClassNotFoundException e) {
         throw new KettlePluginException(BaseMessages.getString(PKG, "PluginRegistry.RuntimeError.ClassNotFound.PLUGINREGISTRY003"), e); //$NON-NLS-1$
       } catch (InstantiationException e) {
+    	  e.printStackTrace();
         throw new KettlePluginException(BaseMessages.getString(PKG, "PluginRegistry.RuntimeError.UnableToInstantiateClass.PLUGINREGISTRY004"), e); //$NON-NLS-1$
       } catch (IllegalAccessException e) {
         throw new KettlePluginException(BaseMessages.getString(PKG, "PluginRegistry.RuntimeError.IllegalAccessToClass.PLUGINREGISTRY005"), e); //$NON-NLS-1$

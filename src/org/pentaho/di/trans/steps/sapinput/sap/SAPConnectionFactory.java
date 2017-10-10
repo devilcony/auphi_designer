@@ -37,10 +37,12 @@ public class SAPConnectionFactory implements DatabaseFactoryInterface {
 			String message = BaseMessages.getString(SapInputMeta.class, "SapInputDialog.JCoLibNotFound");
 			throw new SAPException(message);
 		}
+		System.out.println("JCoLib is Available");
 		if (!SAPLibraryTester.isJCoImplAvailable()) {
 			String message = BaseMessages.getString(SapInputMeta.class, "SapInputDialog.JCoImplNotFound");
 			throw new SAPException(message);
 		}
+		System.out.println("JCoImpl is Available");
 		return new SAPConnectionImpl();
 	}
 

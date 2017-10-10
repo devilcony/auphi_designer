@@ -222,4 +222,84 @@ public class CsvInputData extends BaseStepData implements StepDataInterface
 		return result;
 	}
 
+	  /**
+	   * Check to see if the buffer size is large enough given the data.endBuffer pointer.<br>
+	   * Resize the buffer if there is not enough room.
+	   *
+	   * @return false if everything is OK, true if there is a problem and we should stop.
+	   * @throws IOException
+	   *           in case there is a I/O problem (read error)
+	   */
+	  boolean resizeBufferIfNeeded() throws IOException {
+	    if ( endOfBuffer() ) {
+	      // Oops, we need to read more data...
+	      // Better resize this before we read other things in it...
+	      //
+	      resizeByteBufferArray();
+
+	      // Also read another chunk of data, now that we have the space for it...
+	      //
+	      int n = readBufferFromFile();
+
+	      // If we didn't manage to read something, we return true to indicate we're done
+	      //
+	      return n < 0;
+	    }
+
+	    return false;
+	  }
+	  
+	  /**
+	   * Moves the endBuffer pointer by one.<br>
+	   * If there is not enough room in the buffer to go there, resize the byte buffer and read more data.<br>
+	   * if there is no more data to read and if the endBuffer pointer has reached the end of the byte buffer, we return
+	   * true.<br>
+	   *
+	   * @return true if we reached the end of the byte buffer.
+	   * @throws IOException
+	   *           In case we get an error reading from the input file.
+	   */
+	  boolean moveEndBufferPointer() throws IOException {
+	    return moveEndBufferPointer( true );
+	  }
+
+	  /**
+	   * This method should be used very carefully. Moving pointer without increasing number of written bytes
+	   * can lead to data corruption.
+	   */
+	  boolean moveEndBufferPointer( boolean increaseTotalBytes ) throws IOException {
+	    endBuffer++;
+	    if ( increaseTotalBytes ) {
+	      totalBytesRead++;
+	    }
+	    return resizeBufferIfNeeded();
+	  }
+
+	  int getStartBuffer() {
+	    return startBuffer;
+	  }
+
+	  void setStartBuffer( int startBuffer ) {
+	    this.startBuffer = startBuffer;
+	  }
+
+	  int getEndBuffer() {
+	    return endBuffer;
+	  }
+
+	  boolean newLineFound() {
+	    return crLfMatcher.isReturn( byteBuffer, endBuffer ) || crLfMatcher.isLineFeed( byteBuffer, endBuffer );
+	  }
+
+	  boolean delimiterFound() {
+	    return delimiterMatcher.matchesPattern( byteBuffer, endBuffer, delimiter );
+	  }
+
+	  boolean enclosureFound() {
+	    return enclosureMatcher.matchesPattern( byteBuffer, endBuffer, enclosure );
+	  }
+
+	  boolean endOfBuffer() {
+	    return endBuffer >= bufferSize;
+	  }
 }

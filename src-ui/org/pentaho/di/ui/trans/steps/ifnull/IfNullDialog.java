@@ -465,6 +465,8 @@ public class IfNullDialog extends BaseStepDialog implements StepDialogInterface
 					String msg = BaseMessages.getString(PKG, "IfNullDialog.DoMapping.UnableToFindInput");
 					logError(msg);
 				}
+				if(prevFields==null)
+					return;
 				String[] prevStepFieldNames = prevFields.getFieldNames();
 				if(prevStepFieldNames!=null){
 					Arrays.sort(prevStepFieldNames);

@@ -148,6 +148,7 @@ public interface ValueMetaInterface extends Cloneable
     
     public String   getConversionMask();
     public void     setConversionMask(String conversionMask);
+    public void     setConversionMask(int length, int precision);
     
     public String getDecimalSymbol();
     public void setDecimalSymbol(String decimalSymbol);
